@@ -25,3 +25,4 @@ COPY --from=openjdk:8u332-jre /usr/local/openjdk-8 $JAVA_HOME
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 RUN pip install pyspark
+RUN pip install findspark
