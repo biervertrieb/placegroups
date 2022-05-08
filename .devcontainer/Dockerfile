@@ -19,3 +19,9 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+
+ENV JAVA_HOME=/opt/java/openjdk-8
+COPY --from=openjdk:8u332-jre /usr/local/openjdk-8 $JAVA_HOME
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+RUN pip install pyspark
