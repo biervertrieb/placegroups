@@ -23,6 +23,3 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 ENV JAVA_HOME=/opt/java/openjdk-8
 COPY --from=openjdk:8u332-jre /usr/local/openjdk-8 $JAVA_HOME
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
-
-RUN pip install pyspark
-RUN pip install findspark
