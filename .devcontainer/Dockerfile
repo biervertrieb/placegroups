@@ -20,6 +20,16 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
 
+# Pyspark braucht Java 8+ JVM
+# das ist so mit die "kleinste"
 ENV JAVA_HOME=/opt/java/openjdk-8
 COPY --from=openjdk:8u332-jre /usr/local/openjdk-8 $JAVA_HOME
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+# Diese Java Abhängigkeiten sind so groß dass ich die ins Image mit reinpacke.
+# Normalerweise werden alle Abhängigkeiten in der requirements.txt
+# runtergeladen nachdem der Container gestartet ist.
+# Man müsste also jedes mal beim Neustart des Containers wieder 200MB+
+# Pyspark runterladen. -> Lieber 1x im Image und dann hat man es jedesmal
+RUN pip3 install findspark
+RUN pip3 install pyspark
