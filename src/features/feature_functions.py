@@ -10,7 +10,8 @@ def group_dataframe_by_columns(df_input: DataFrame, columns_to_group: list, add_
     exprs = [F.collect_list(colName) for colName in agg_columns]
     if add_count:
         exprs.insert(0, F.count(columns_to_group[0]).alias('count'))
-    df_grouped = df_input.groupby(columns_to_group).agg(*exprs)
+    df_grouped = df_input.groupby(columns_to_group).agg(
+        *exprs).orderBy(F.col('count').desc())
     return df_grouped
 
 
