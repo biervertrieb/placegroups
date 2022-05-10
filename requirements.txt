@@ -12,3 +12,5 @@ findspark
 pyspark
 pandas
 matplotlib
+numpy
+pytest
