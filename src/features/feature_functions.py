@@ -3,11 +3,17 @@ import pyspark.sql.functions as F
 from pyspark.sql import DataFrame
 
 
-def group_dataframe_by_columns(df_input: DataFrame, columns_to_group: list) -> DataFrame:
-    ''' groups a dataframe by a list of columns. all other columns get aggregatet as a list ov their values '''
+def group_dataframe_by_columns(df_input: DataFrame, columns_to_group: list, add_count=True) -> DataFrame:
+    ''' groups a dataframe by a list of columns. all other columns get aggregatet as a list ov their values. adds a count as first aggregated column '''
     agg_columns = [
         colname for colname in df_input.columns if colname not in columns_to_group]
     exprs = [F.collect_list(colName) for colName in agg_columns]
-    exprs.insert(0, F.count(columns_to_group[0]).alias('count'))
+    if add_count:
+        exprs.insert(0, F.count(columns_to_group[0]).alias('count'))
     df_grouped = df_input.groupby(columns_to_group).agg(*exprs)
     return df_grouped
+
+
+def group_dataframe_by_user(df_input):
+    ''' shorthand helper func'''
+    return group_dataframe_by_columns(df_input, ['user_id'])
