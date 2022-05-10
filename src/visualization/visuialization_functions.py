@@ -12,7 +12,8 @@ def plot_pixellist(pixellist, color='blue'):
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('time')
-    ax.set_ylim(ax.get_ylim()[::-1])
+    ax.set_xlim([0, 2000])
+    ax.set_ylim([2000, 0])
     plt.show()
 
 
