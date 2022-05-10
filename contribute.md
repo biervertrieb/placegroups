@@ -1,11 +1,8 @@
 # Contribution Guide
 
-## Developing inside a Container
+## Developing inside a Container, Source Code on local machine
 
 The Visual Studio Code Remote - Containers extension lets you use a Docker container as a full-featured development environment. It allows you to open any folder inside (or mounted into) a container and take advantage of Visual Studio Code's full feature set.
-
-## Variant 1 - Source Code Repository on local machine
-This is the recommended variant.
 
 ### Requirements
 
@@ -21,19 +18,11 @@ This is the recommended variant.
 - open VS Code inside workspace directory and press Ctrl+Shift+P
 - execute "Remote-Containers: Reopen in Container"
 
-## Variant 2 - Source Code Repository inside container
+### First Steps
 
-### Requirements
-
-- install Docker Desktop
-- install VS Code
-- install Remote Development extension pack for VS Code
-
-### Setup
-
-- open VS Code and press Ctrl+Shift+P
-- execute "Remote-Containers: Clone repository in Container Volume..."
-- choose https://github.com/biervertrieb/placegroups as repository and select a branch
+- open and read notebooks/0.0-start_here.ipynb
+- look at some other Notebooks
+- start your own Jupyter Notebook!
 
 Project Organization
 ------------
