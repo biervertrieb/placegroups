@@ -1,33 +1,22 @@
 ''' This module contains helper functions to visualize data and features '''
-import itertools
 import matplotlib.pyplot as plt
+import numpy as np
 
 
-def plot_pixellist(pixellist, color='blue'):
+def plot_pixellist(pixellist: list):
     ''' plot pixels in one color '''
+    plot_list_of_pixellist([pixellist])
+
+
+def plot_list_of_pixellist(pixellistlist: list):
+    ''' plot pixel in mixed colors '''
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
-    xs, ys, ts = list(pixellist)
-    ax.scatter(xs, ys, ts, color)
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('time')
-    ax.set_xlim([0, 2000])
-    ax.set_ylim([2000, 0])
-    plt.show()
-
-
-def plot_userlist_pixel(userpixel):
-    ''' plot pixels for multiple users '''
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
-
-    colors = itertools.cycle(
-        ["blue", "green", "red", "yellow", "cyan", "orange"])
-    for pixellist in userpixel:
+    color = iter(plt.cm.rainbow(np.linspace(0, 1, len(pixellistlist))))
+    for pixellist in pixellistlist:
+        c = next(color)
         xs, ys, ts = list(pixellist)
-        ax.scatter(xs, ys, ts, color=next(colors))
-
+        ax.scatter(xs, ys, ts, c)
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('time')
