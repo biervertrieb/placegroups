@@ -33,3 +33,6 @@ ENV PATH="${JAVA_HOME}/bin:${PATH}"
 # Pyspark runterladen. -> Lieber 1x im Image und dann hat man es jedesmal
 RUN pip3 install findspark
 RUN pip3 install pyspark
+
+# Diese Einstellung verhindert dass das komplette Datenset runtergeladen wird
+ENV TEST_ENVIRONMENT=TRUE
