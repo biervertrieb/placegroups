@@ -26,18 +26,22 @@ def provide_rawcsv(sample=False):
     finish = 78
     if sample:
         start = 50
-        finish = 50
+        finish = 51
     for i in np.arange(start, finish):
-        file_prefix = '2022_place_canvas_history-0000000000'+i
-        if os.path.exists(LOCAL_DIR_RAWDATA+file_prefix+'.csv') is False:
-            provide_and_unpack_gzip(file_prefix)
+        print('providing '+filename_csv(i)+' ...')
+        if os.path.exists(filename_csv(i)) is False:
+            print('not found. need to download '+filename_gzip(i)+' ...')
+            provide_and_unpack_gzip(i)
+        else:
+            print(filename_csv(i)+' is already in data/raw')
 
 
-def provide_and_unpack_gzip(file_prefix: str):
+def provide_and_unpack_gzip(file_nr: int):
     ''' Provides a previously missing .csv file. '''
-    if os.path.exists(LOCAL_DIR_RAWDATA+file_prefix+'.csv.gzip') is False:
-        download_dataset_fromsource(file_prefix)
-    unpack_gzip(file_prefix)
+    gz_name = filename_gzip(file_nr)
+    if os.path.exists(gz_name) is False:
+        download_dataset_fromsource(file_nr)
+    unpack_gzip(file_nr)
 
 
 def transform_dataframe(df_input: DataFrame) -> DataFrame:
@@ -86,22 +90,67 @@ def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
     return df_output
 
 
-def unpack_gzip(file_prefix: str):
+def unpack_gzip(file_nr: int):
     ''' dataset is downloaded as gzip. we need to unpack everything '''
-    with gzip.open(LOCAL_DIR_RAWDATA+file_prefix+'.csv.gzip', 'rb') as f_in:
-        with open(LOCAL_DIR_RAWDATA+file_prefix+'.csv', 'wb') as f_out:
+    csv_name = filename_csv(file_nr)
+    gz_name = filename_gzip(file_nr)
+    print('unpacking '+gz_name+' into '+csv_name)
+    with gzip.open(gz_name, 'rb') as f_in:
+        with open(csv_name, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
-    os.remove(LOCAL_DIR_RAWDATA+file_prefix+'.csv.gzip')
+    print('deleting '+gz_name)
+    os.remove(gz_name)
 
 
-def download_dataset_fromsource(file_prefix: str):
+def download_dataset_fromsource(file_nr: int):
     ''' Downloading the reddit place dataset from source '''
+    filename = filename_gzip_nopath(file_nr)
+    url = 'https://placedata.reddit.com/data/canvas-history/'+filename
+    localfilename = filename_gzip(file_nr)
+    download_file(url, localfilename)
+
+
+def filename_csv(file_nr: int) -> str:
+    ''' Helper to build correct csv filename with local path'''
+    return LOCAL_DIR_RAWDATA+filename_csv_nopath(file_nr)
+
+
+def filename_gzip(file_nr: int) -> str:
+    ''' Helper to build correct gzip filename with local path'''
+    return filename_csv(file_nr) + '.gzip'
+
+
+def filename_csv_nopath(file_nr: int) -> str:
+    ''' Helper to build correct csv filename'''
+    return reddit_filename_no_type(file_nr)+'.csv'
+
+
+def filename_gzip_nopath(file_nr: int) -> str:
+    ''' Helper to build correct gzip filename'''
+    return filename_csv_nopath(file_nr)+'.gzip'
+
+
+def reddit_filename_no_type(file_nr: int) -> str:
+    ''' Helper to build correct reddit filename'''
+    prefix = '2022_place_canvas_history-0000000000'
+    # Normierung: geht von 0 - 78
+    if file_nr < 0:
+        file_nr = 0
+    if file_nr > 78:
+        file_nr = 78
+    if file_nr < 10:
+        prefix = prefix+'0'
+    return prefix + str(file_nr)
+
+
+def download_file(url: str, localfilepath: str):
+    ''' Helper to download a single file'''
+    print('downloading from '+url + ' to '+localfilepath)
     # stream = True , iter_content() - Daten werden immer nur Stückweise
     # runtergeladen bis das Stück weiterverarbeitet wurde
-    with requests.get('https://placedata.reddit.com/data/canvas-history/'
-                      + file_prefix+'.csv.gzip', stream=True) as response:
+    with requests.get(url, stream=True) as response:
         response.raise_for_status()
-        with open(LOCAL_DIR_RAWDATA+file_prefix+'.csv.gzip', "wb") as file_handle:
+        with open(localfilepath, "wb") as file_handle:
             for chunk in response.iter_content(chunk_size=1024):
                 file_handle.write(chunk)
             file_handle.close()
