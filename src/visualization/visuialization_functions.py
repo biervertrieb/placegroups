@@ -1,6 +1,4 @@
 ''' This module contains helper functions to visualize data and features '''
-from matplotlib import projections
-from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -24,7 +22,7 @@ def plot_pixellist(pixellist: list, color='blue', subplot=None, finish=True):
     if subplot is None:
         subplot = new_xyt_plot()
     x_list, y_list, t_list = list(pixellist)
-    subplot.scatter(x_list, y_list, t_list, color)
+    subplot.scatter(x_list, y_list, t_list, c=color)
     if finish:
         plt.show()
     return subplot
@@ -51,7 +49,7 @@ def plot_line(x_list, y_list, t_list, color='blue', subplot=None, finish=True):
     ''' Helperfunction to draw a single line '''
     if subplot is None:
         subplot = new_xyt_plot()
-    subplot.plot(x_list, y_list, t_list, color)
+    subplot.plot(x_list, y_list, t_list, c=color)
     if finish:
         plt.show()
     return subplot
