@@ -57,6 +57,7 @@ def make_dataframe_from_rawcsv() -> DataFrame:
     raw_csvs = LOCAL_DIR_RAWDATA+'*.csv'
 
     spark = SparkSession.builder.appName('placegroups').getOrCreate()
+    spark.sparkContext.setCheckpointDir('../data/interim/checkpoints')
     data_frame = spark.read.option('header', True).csv(raw_csvs)
     return data_frame
 
