@@ -41,7 +41,7 @@ def plot_pixellist(pixellist: list, color='blue', subplot=None, finish=True):
     x_list, y_list, t_list = list(pixellist)
     subplot.scatter(x_list, y_list, t_list, c=color)
     if finish:
-        plt.show()
+        show_and_save(subplot)
     return subplot
 
 
@@ -58,7 +58,7 @@ def plot_list_of_pixellist(pixellistlist: list, color=None, subplot=None, finish
             color = [next(colorpicker)]
         plot_pixellist(pixellist, color, subplot, False)
     if finish:
-        plt.show()
+        show_and_save(subplot)
     return subplot
 
 
@@ -68,7 +68,7 @@ def plot_line(x_list, y_list, t_list, color='blue', subplot=None, finish=True):
         subplot = new_xyt_plot()
     subplot.plot(x_list, y_list, t_list, c=color)
     if finish:
-        plt.show()
+        show_and_save(subplot)
     return subplot
 
 
@@ -105,5 +105,5 @@ def plot_pixel_boundingbox(x_coord, y_coord, t_coord, color='blue', subplot=None
     plot_line([x_coord-RZModel.max_xy_dist, x_coord-RZModel.max_xy_dist], [y_coord+RZModel.max_xy_dist, y_coord +
               RZModel.max_xy_dist], [t_coord+RZModel.max_t_dist, t_coord-RZModel.max_t_dist], color, subplot, False)
     if finish:
-        plt.show()
+        show_and_save(subplot)
     return subplot
