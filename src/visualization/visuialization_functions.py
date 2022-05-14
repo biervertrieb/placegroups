@@ -12,8 +12,8 @@ def new_xyt_plot():
     subplot.set_xlabel('X')
     subplot.set_ylabel('Y')
     subplot.set_zlabel('Zeit')
-    subplot.set_xlim([0, 2000])
-    subplot.set_ylim([2000, 0])
+    subplot.set_xlim([0, 2001])
+    subplot.set_ylim([2001, 0])
     return subplot
 
 
@@ -29,16 +29,16 @@ def plot_pixellist(pixellist: list, color='blue', subplot=None, finish=True):
 
 
 def plot_list_of_pixellist(pixellistlist: list, color=None, subplot=None, finish=True):
-    ''' plot pixel in mixed colors '''
+    ''' plot pixel in mixed colors (max 10 colors!) '''
     if subplot is None:
         subplot = new_xyt_plot()
     colorpicker = None
     if color is None:
-        colorpicker = iter(plt.cm.rainbow(
-            np.linspace(0, 1, len(pixellistlist))))
+        colorpicker = iter(plt.cm.tab10(
+            np.linspace(0, 1, 10)))
     for pixellist in pixellistlist:
         if colorpicker is not None:
-            color = next(colorpicker)
+            color = [next(colorpicker)]
         plot_pixellist(pixellist, color, subplot, False)
     if finish:
         plt.show()
