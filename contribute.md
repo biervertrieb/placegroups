@@ -79,7 +79,7 @@ Project Organization
 
 ## Best Practices
 
-- never commit to "main" or "dev" branch
+- never commit to "main" branch
 - create your own branches and commit changes
 - pull from origin before creating a new branch
 - write Unit Tests for every piece of code
@@ -89,45 +89,10 @@ Project Organization
 
 ## Workflow for adding features and refactoring code
 
-![](Feature.png)
-
-- change branch to dev and pull from origin
-- create a new branch and name it appropriately according to your task
+- pull from origin
+- create a new branch from main and name it appropriately according to your task
 - write code, test, run, verify
 - you may commit as much incremental changes as you like
 - publish / push your new branch to origin
-- finish your task and...
-- create a pull request to merge your branch into the dev branch
-
-## Workflow for Hotfixing and trivial changes
-
-![](Hotfies_3.drawio.png)
-
-- change branch to main and pull from origin
-- create a new branch and name it appropriately according to your task
-- write code, test, run, verify
-- you may commit as much incremental changes as you like
-- publish / push your new branch to origin
-- finish your task and...
-- create TWO pull requests to merge your branch into the dev and main branch
-
-## Unit Testing
-
-- spawn a new Container with JDK, Maven and all files from src/
-- execute command mvnw test
-
-## Debugging
-
-- spawn a container with JDK, Maven and all files from src/
-- execute mvnw package
-- spawn a container with JDK and copy the .jar from last container
-- set the container environment variables to enable debug mode in the container JVM
-- execute the jar and run the inside the container
-- attach the Java Debugger in remote mode to JVM in the new container
-
-## Run the app on your local machine
-
-- spawn a container with JDK, Maven and all files from src/
-- execute mvnw package
-- spawn a container with JDK and copy the .jar from last container
-- execute the jar and run the inside the container
+- finish your task, commit to your branch, and...
+- create a pull request to merge your branch into the main branch

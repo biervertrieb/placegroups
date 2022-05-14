@@ -25,7 +25,7 @@ r/place was a social experiment conducted by reddit.com in which users could dra
 
 ## Contributing
 
-[guide to contributing](contribute.md)
+[Guide to Contributing](contribute.md)
 
 ## License
 
