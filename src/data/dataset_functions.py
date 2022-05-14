@@ -9,14 +9,19 @@ import pyspark.sql.functions as F
 
 LOCAL_DIR_RAWDATA = "../data/raw/"
 
+get_dataframe.cachedFrame = None
+
 
 def get_dataframe(sample=False) -> DataFrame:
     ''' Provides the Pyspark Dataframe data structure ready to use '''
+    if get_dataframe.cachedFrame is not None:
+        return cachedFrame
     if 'TEST_ENVIRONMENT' in os.environ:
         sample = True
     provide_rawcsv(sample)
     new_dataframe = make_dataframe_from_rawcsv()
     transformed_dataframe = transform_dataframe(new_dataframe)
+    get_dataframe.cachedFrame = transformed_dataframe
     return transformed_dataframe
 
 
