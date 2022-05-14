@@ -36,3 +36,8 @@ RUN pip3 install pyspark
 
 # Diese Einstellung verhindert dass das komplette Datenset runtergeladen wird
 ENV TEST_ENVIRONMENT=TRUE
+
+# PySpark beim geladen werden dazu überreden auch GraphFrames mitzuladen
+# geht leider nicht über pip weil sowohl java als auch python packages installiert werden
+# nur direkt über spark
+ENV PYSPARK_SUBMIT_ARGS='--packages graphframes:graphframes:0.8.2-spark3.2-s_2.12 pyspark-shell'
