@@ -12,7 +12,8 @@ def show_and_save(subplot=None, savename=None):
         if subplot is None:
             savename = 'unnamed_fig'
         else:
-            savename = (subplot.get_title()).lower().replace(' ', '_')
+            savename = (subplot.get_title()).lower().replace(' ', '_').replace(
+                'ä', 'ae').replace('ö', 'oe').replace('ü', 'ue')
     plt.savefig(savepath+savename+'.jpg', dpi=300)
     plt.show()
 
