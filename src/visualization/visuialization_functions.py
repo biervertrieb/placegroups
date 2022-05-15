@@ -1,7 +1,6 @@
 ''' This module contains helper functions to visualize data and features '''
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 
 from src.models.models import RZModel
 
@@ -11,13 +10,10 @@ def show_and_save(subplot=None, savename=None):
     savepath = '../reports/figures/'
     if savename is None:
         if subplot is None:
-            i = 0
-            savename = 'unnamed_fig'+input()
-            while os.path.exists(savepath+savename+'.jpg'):
-                i = i+1
-                savename = 'unnamed_fig'+i
+            savename = 'unnamed_fig'
         else:
-            savename = (subplot.get_title()).lower().replace(' ', '_')
+            savename = (subplot.get_title()).lower().replace(' ', '_').replace(
+                'ä', 'ae').replace('ö', 'oe').replace('ü', 'ue')
     plt.savefig(savepath+savename+'.jpg', dpi=300)
     plt.show()
 
