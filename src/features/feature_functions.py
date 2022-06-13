@@ -22,3 +22,6 @@ def group_dataframe_by_user(df_input):
 def group_dataframe_by_color(df_input):
     '''shorthand helper func'''
     return group_dataframe_by_columns(df_input, ['pixel_color'])
+
+def group_dataframe_by_pixel(df_input):
+    return group_dataframe_by_columns(df_input,['x','y'])
