@@ -31,8 +31,8 @@ def provide_rawcsv(sample=False):
     start = 0
     finish = 78
     if sample:
-        start = 77
-        finish = 78
+        start = 50
+        finish = 51
     for i in np.arange(start, finish):
         print('providing '+filename_csv(i)+' ...')
         if os.path.exists(filename_csv(i)) is False:
