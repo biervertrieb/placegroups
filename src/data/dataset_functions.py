@@ -25,6 +25,20 @@ def get_dataframe(sample=False) -> DataFrame:
 
 get_dataframe.cachedFrame = None
 
+def get_dataframei(i: int) -> DataFrame:
+    ''' Provides the Pyspark Dataframe data structure ready to use from specific dataset nr '''
+    provide_rawcsvi(i)
+    new_dataframe = make_dataframe_from_rawcsvi(i)
+    transformed_dataframe = transform_dataframe(new_dataframe)
+    return transformed_dataframe
+
+def get_dataframei_onlymods(i: int) -> DataFrame:
+    ''' Provides the Pyspark Dataframe data structure ready to use from specific dataset nr '''
+    provide_rawcsvi(i)
+    new_dataframe = make_dataframe_from_rawcsvi(i)
+    transformed_dataframe = transform_dataframe_onlymods(new_dataframe)
+    return transformed_dataframe
+
 
 def provide_rawcsv(sample=False):
     ''' Makes sure we have the *.csv dataset we need '''
@@ -34,12 +48,50 @@ def provide_rawcsv(sample=False):
         start = 50
         finish = 51
     for i in np.arange(start, finish):
-        print('providing '+filename_csv(i)+' ...')
-        if os.path.exists(filename_csv(i)) is False:
-            print('not found. need to download '+filename_gzip(i)+' ...')
-            provide_and_unpack_gzip(i)
-        else:
-            print(filename_csv(i)+' is already in data/raw')
+        provide_rawcsvi(i)
+        
+
+def provide_rawcsvi(i: int) -> DataFrame:
+    print('providing '+filename_csv(i)+' ...')
+    if os.path.exists(filename_csv(i)) is False:
+        print('not found. need to download '+filename_gzip(i)+' ...')
+        provide_and_unpack_gzip(i)
+    else:
+        print(filename_csv(i)+' is already in data/raw')
+
+def transform_dataframe_onlymods(df_input: DataFrame) -> DataFrame:
+    ''' Transfroms a dataframe from its source structure but uses only the rows with moderator data '''
+    df_transform = transform_dataframe_filter_onlymods(df_input)
+    df_transform = transform_dataframe_timestamp(df_transform)
+    df_transform = transform_dataframe_normalize_seconds(df_transform)
+    df_transform = transform_dataframe_modcolumns(df_transform)
+    return df_transform
+
+def transform_dataframe_modcolumns(df_input: DataFrame) -> DataFrame:
+    ''' Transforms columns from [\'timestamp\',\'user_id\',\'pixel_color\',\'coordinate\']
+    into [\'user_id\',\'x1\',\'y1\',\'x2\',\'y2\',\'t\',\'pixel_color\']'''
+    df_output = df_input.select('user_id',
+                                F.split('coordinate', ',').getItem(
+                                    0).cast('int').alias('x1'),
+                                F.split('coordinate', ',').getItem(
+                                    1).cast('int').alias('y1'),
+                                F.split('coordinate', ',').getItem(
+                                    2).cast('int').alias('x2'),
+                                F.split('coordinate', ',').getItem(
+                                    3).cast('int').alias('y2'),
+                                F.col('timestamp').alias('t'),
+                                'pixel_color')
+    return df_output
+
+def transform_dataframe_filter_onlymods(df_input: DataFrame) -> DataFrame:
+    ''' outputs only mod data - 2 coordinate pairs '''
+    df_output = df_input.where(F.size(F.split('coordinate', ',')) > 2)
+    return df_output
+
+def transform_dataframe_filter_nomods(df_input: DataFrame) -> DataFrame:
+    ''' filters mod data - they have 2 coordinate pairs per row '''
+    df_output = df_input.where(F.size(F.split('coordinate', ',')) == 2)
+    return df_output
 
 
 def provide_and_unpack_gzip(file_nr: int):
@@ -68,6 +120,14 @@ def make_dataframe_from_rawcsv() -> DataFrame:
     data_frame = spark.read.option('header', True).csv(raw_csvs)
     return data_frame
 
+def make_dataframe_from_rawcsvi(i: int) -> DataFrame:
+    ''' takes all csv files from the raw data dir and loads it into a dataFrame '''
+
+    spark = SparkSession.builder.appName('placegroups').getOrCreate()
+    spark.sparkContext.setCheckpointDir('../data/interim/checkpoints')
+    data_frame = spark.read.option('header', True).csv(filename_csv(i))
+    return data_frame
+
 
 def transform_dataframe_timestamp(df_input: DataFrame) -> DataFrame:
     ''' Transforms timestap \'yyyy-mm-dd HH:MM:ss.SSSS UTC\' into Unix Epoch seconds '''
@@ -80,7 +140,7 @@ def transform_dataframe_normalize_seconds(df_input: DataFrame) -> DataFrame:
     ''' normalizes the timestamp column so it starts with 0 seconds
     ONLY USE THIS AFTER TIMESTAMP FORMAT WAS TRANSFORMED '''
     mints = 0
-    if(df_input.select('timestamp').rdd.isEmpty == False):
+    if(df_input.select('timestamp').rdd.isEmpty is False):
         mints = df_input.select('timestamp').rdd.min()[0]
     df_output = df_input.withColumn(
         'timestamp', (df_input['timestamp'] - mints))
