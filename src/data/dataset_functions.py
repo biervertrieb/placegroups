@@ -52,7 +52,8 @@ def provide_and_unpack_gzip(file_nr: int):
 
 def transform_dataframe(df_input: DataFrame) -> DataFrame:
     ''' Transforms a dataframe from its source structure into something more usable '''
-    df_transform = transform_dataframe_timestamp(df_input)
+    df_transform = transform_dataframe_filter_nomods(df_input)
+    df_transform = transform_dataframe_timestamp(df_transform)
     df_transform = transform_dataframe_normalize_seconds(df_transform)
     df_transform = transform_dataframe_colums(df_transform)
     return df_transform
@@ -78,11 +79,46 @@ def transform_dataframe_timestamp(df_input: DataFrame) -> DataFrame:
 def transform_dataframe_normalize_seconds(df_input: DataFrame) -> DataFrame:
     ''' normalizes the timestamp column so it starts with 0 seconds
     ONLY USE THIS AFTER TIMESTAMP FORMAT WAS TRANSFORMED '''
-    mints = df_input.select('timestamp').rdd.min()[0]
+    mints = 0
+    if(df_input.select('timestamp').rdd.isEmpty == False):
+        mints = df_input.select('timestamp').rdd.min()[0]
     df_output = df_input.withColumn(
         'timestamp', (df_input['timestamp'] - mints))
     return df_output
 
+def transform_dataframe_onlymods(df_input: DataFrame) -> DataFrame:
+    ''' Transfroms a dataframe from its source structure but uses only the rows with moderator data '''
+    df_transform = transform_dataframe_filter_onlymods(df_input)
+    df_transform = transform_dataframe_timestamp(df_transform)
+    df_transform = transform_dataframe_normalize_seconds(df_transform)
+    df_transform = transform_dataframe_modcolumns(df_transform)
+    return df_transform
+
+def transform_dataframe_modcolumns(df_input: DataFrame) -> DataFrame:
+    ''' Transforms columns from [\'timestamp\',\'user_id\',\'pixel_color\',\'coordinate\']
+    into [\'user_id\',\'x1\',\'y1\',\'x2\',\'y2\',\'t\',\'pixel_color\']'''
+    df_output = df_input.select('user_id',
+                                F.split('coordinate', ',').getItem(
+                                    0).cast('int').alias('x1'),
+                                F.split('coordinate', ',').getItem(
+                                    1).cast('int').alias('y1'),
+                                F.split('coordinate', ',').getItem(
+                                    2).cast('int').alias('x2'),
+                                F.split('coordinate', ',').getItem(
+                                    3).cast('int').alias('y2'),
+                                F.col('timestamp').alias('t'),
+                                'pixel_color')
+    return df_output
+
+def transform_dataframe_filter_onlymods(df_input: DataFrame) -> DataFrame:
+    ''' outputs only mod data - 2 coordinate pairs '''
+    df_output = df_input.where(F.size(F.split('coordinate', ',')) > 2)
+    return df_output
+
+def transform_dataframe_filter_nomods(df_input: DataFrame) -> DataFrame:
+    ''' filters mod data - they have 2 coordinate pairs per row '''
+    df_output = df_input.where(F.size(F.split('coordinate', ',')) == 2)
+    return df_output
 
 def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
     ''' Transforms columns from [\'timestamp\',\'user_id\',\'pixel_color\',\'coordinate\']
