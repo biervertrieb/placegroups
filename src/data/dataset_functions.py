@@ -31,8 +31,8 @@ def provide_rawcsv(sample=False):
     start = 0
     finish = 78
     if sample:
-        start = 50
-        finish = 51
+        start = 77
+        finish = 78
     for i in np.arange(start, finish):
         print('providing '+filename_csv(i)+' ...')
         if os.path.exists(filename_csv(i)) is False:
@@ -92,6 +92,10 @@ def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
                                     0).cast('int').alias('x'),
                                 F.split('coordinate', ',').getItem(
                                     1).cast('int').alias('y'),
+                                F.split('coordinate', ',').getItem(
+                                   2).cast('int').alias('mod_x'),
+                                F.split('coordinate', ',').getItem(
+                                   3).cast('int').alias('mod_y'),
                                 F.col('timestamp').alias('t'),
                                 'pixel_color')
     return df_output
