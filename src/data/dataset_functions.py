@@ -45,8 +45,8 @@ def provide_rawcsv(sample=False):
     start = 0
     finish = 78
     if sample:
-        start = 51
-        finish = 52
+        start = 50
+        finish = 51
     for i in np.arange(start, finish):
         provide_rawcsvi(i)
         
