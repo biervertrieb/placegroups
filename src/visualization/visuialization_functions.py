@@ -103,3 +103,82 @@ def plot_pixel_boundingbox(x_coord, y_coord, t_coord, color='blue', subplot=None
     if finish:
         show_and_save(subplot)
     return subplot
+
+def parse_pixel_color(pixel_color):
+    """Convert a hex color code to an integer key."""
+    hex_to_key = {
+        "#000000": 0,
+        "#00756F": 1,
+        "#009EAA": 2,
+        "#00A368": 3,
+        "#00CC78": 4,
+        "#00CCC0": 5,
+        "#2450A4": 6,
+        "#3690EA": 7,
+        "#493AC1": 8,
+        "#515252": 9,
+        "#51E9F4": 10,
+        "#6A5CFF": 11,
+        "#6D001A": 12,
+        "#6D482F": 13,
+        "#7EED56": 14,
+        "#811E9F": 15,
+        "#898D90": 16,
+        "#94B3FF": 17,
+        "#9C6926": 18,
+        "#B44AC0": 19,
+        "#BE0039": 20,
+        "#D4D7D9": 21,
+        "#DE107F": 22,
+        "#E4ABFF": 23,
+        "#FF3881": 24,
+        "#FF4500": 25,
+        "#FF99AA": 26,
+        "#FFA800": 27,
+        "#FFB470": 28,
+        "#FFD635": 29,
+        "#FFF8B8": 30,
+        "#FFFFFF": 31,
+    }
+    color = hex_to_key[pixel_color]
+    indexed_rgb = (
+        (0, 0, 0),
+        (0, 117, 111),
+        (0, 158, 170),
+        (0, 163, 104),
+        (0, 204, 120),
+        (0, 204, 192),
+        (36, 80, 164),
+        (54, 144, 234),
+        (73, 58, 193),
+        (81, 82, 82),
+        (81, 233, 244),
+        (106, 92, 255),
+        (109, 0, 26),
+        (109, 72, 47),
+        (126, 237, 86),
+        (129, 30, 159),
+        (137, 141, 144),
+        (148, 179, 255),
+        (156, 105, 38),
+        (180, 74, 192),
+        (190, 0, 57),
+        (212, 215, 217),
+        (222, 16, 127),
+        (228, 171, 255),
+        (255, 56, 129),
+        (255, 69, 0),
+        (255, 153, 170),
+        (255, 168, 0),
+        (255, 180, 112),
+        (255, 214, 53),
+        (255, 248, 184),
+        (255, 255, 255),
+    )
+    return indexed_rgb[color]
+    
+def hex_to_rgb(hexcolor):
+    '''converts hex color value to RGB'''
+    hexcolor = hexcolor.lstrip('#')
+    lv = len(hexcolor)
+    return tuple(int(hexcolor[i:i+lv//3], 16) for i in range(0, lv, lv//3))
