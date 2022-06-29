@@ -3,7 +3,7 @@ import os
 from pyspark.sql import SparkSession, DataFrame
 import requests
 import pyspark.sql.functions as F
-from pyspark.sql.functions import regexp_replace
+from pyspark.sql.functions import when
 
 LOCAL_DIR_RAWDATA = "../data/raw/"
 
@@ -24,10 +24,10 @@ def provide_rawcsv():
     ''' Makes sure we have the *.csv dataset we need '''
     print('providing file...')
     if os.path.exists(LOCAL_DIR_RAWDATA+'place_tiles.csv') is False:
-            print('not found. need to download '+LOCAL_DIR_RAWDATA+'place_tiles.csv ...')
-            download_dataset_fromsource()    
+        print('not found. need to download '+LOCAL_DIR_RAWDATA+'place_tiles.csv ...')
+        download_dataset_fromsource()
     else:
-            print(LOCAL_DIR_RAWDATA+'place_tiles.csv is already in data/raw')
+        print(LOCAL_DIR_RAWDATA+'place_tiles.csv is already in data/raw')
 
 def transform_dataframe(df_input: DataFrame) -> DataFrame:
     ''' Transforms a dataframe from its source structure into something more usable '''
@@ -55,15 +55,16 @@ def transform_dataframe_normalize_seconds(df_input: DataFrame) -> DataFrame:
     ''' normalizes the timestamp column so it starts with 0 seconds
     ONLY USE THIS AFTER TIMESTAMP FORMAT WAS TRANSFORMED '''
     mints = 0
-    if(df_input.select('ts').rdd.isEmpty == False):
+    if(df_input.select('ts').rdd.isEmpty is False):
         mints = df_input.select('ts').rdd.min()[0]
     df_output = df_input.withColumn(
-        'ts', (df_input['ts'] - mints))
+    'ts', (df_input['ts'] - mints))
     return df_output
 
 def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
     ''' Transforms columns from [\'ts\',\'user_hash\',\'x_coordinate\',\'y_coordinate,\'color\']
     into [\'user_id\',\'x\',\'y\',\'t\',\'pixel_color\']'''
+
     df_output = df_input.select(F.col('user_hash').alias('user_id'),
                                 F.col('x_coordinate').alias('x'),
                                 F.col('y_coordinate').alias('y'),
@@ -72,23 +73,24 @@ def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
                                 )
     #das geht bestimmt auch einfacher, ich konnte es bis jetzt aber auch noch nicht richtig testen  
     #teilweise kommen auch noch Fehlermeldungen zu den Farben auf
-    df = df_output.withColumn('pixel_color', regexp_replace('pixel_color', '0', '#FFFFFF'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '1', '#E4E4E4'))  
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '2', '#888888'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '3', '#222222'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '4', '#FFA7D1'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '5', '#E50000'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '6', '#E59500'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '7', '#A06A42'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '8', '#E5D900'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '9', '#94E044'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '10', '#02BE01'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '11', '#00E5F0'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '12', '#0083C7'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '13', '#0000EA'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '14', '#E04AFF'))
-    df = df.withColumn('pixel_color', regexp_replace('pixel_color', '15', '#820080'))
-                                
+
+    df = df_output.withColumn("pixel_color", when(df_output.pixel_color == 0, "#FFFFFF")
+      .when(df_output.pixel_color == 1, "#E4E4E4")
+      .when(df_output.pixel_color == 2, "#888888")
+      .when(df_output.pixel_color == 3, "#222222")
+      .when(df_output.pixel_color == 4, "#FFA7D1")
+      .when(df_output.pixel_color == 5, "#E50000")
+      .when(df_output.pixel_color == 6, "#E5D900")
+      .when(df_output.pixel_color == 7, "#A06A42")
+      .when(df_output.pixel_color == 8, "#E5D900")
+      .when(df_output.pixel_color == 9, "#94E044")
+      .when(df_output.pixel_color == 10, "#02BE01")
+      .when(df_output.pixel_color == 11, "#00E5F0")
+      .when(df_output.pixel_color == 12, "#0083C7")
+      .when(df_output.pixel_color == 13, "#0000EA")
+      .when(df_output.pixel_color == 14, "#E04AFF")
+      .when(df_output.pixel_color == 15, "#820080"))
+
     return df
 
 def download_dataset_fromsource():
@@ -108,4 +110,4 @@ def download_file(url: str, localfilepath: str):
         with open(localfilepath, "wb") as file_handle:
             for chunk in response.iter_content(chunk_size=1024):
                 file_handle.write(chunk)
-            file_handle.close()        
+    file_handle.close()        
