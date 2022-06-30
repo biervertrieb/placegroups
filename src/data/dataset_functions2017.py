@@ -66,8 +66,8 @@ def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
     into [\'user_id\',\'x\',\'y\',\'t\',\'pixel_color\']'''
 
     df_output = df_input.select(F.col('user_hash').alias('user_id'),
-                                F.col('x_coordinate').alias('x'),
-                                F.col('y_coordinate').alias('y'),
+                                F.col('x_coordinate').cast('int').alias('x'),
+                                F.col('y_coordinate').cast('int').alias('y'),
                                 F.col('ts').alias('t'),
                                 F.col('color').alias('pixel_color')
                                 )
@@ -89,7 +89,8 @@ def transform_dataframe_colums(df_input: DataFrame) -> DataFrame:
       .when(df_output.pixel_color == 12, "#0083C7")
       .when(df_output.pixel_color == 13, "#0000EA")
       .when(df_output.pixel_color == 14, "#E04AFF")
-      .when(df_output.pixel_color == 15, "#820080"))
+      .when(df_output.pixel_color == 15, "#820080")
+      .otherwise("#FFFFFF"))
 
     return df
 
