@@ -38,6 +38,7 @@ def group_dataframe_by_time_and_user(df_input):
     return group_dataframe_by_columns(df_input, ['user_id', 't'])
 
 def get_latestpixels_from_box(dataFrame,x1,y1,x2,y2,t):
+    ''' Funktion zum finden der aktuellen Pixeldaten in einem Viereck '''
     # generiere relevante Pixelkoordinaten in einem neuen Frame
     x_list = list(range(x1,x2+1))
     y_list = list(range(y1,y2+1))
