@@ -19,9 +19,19 @@ def group_dataframe_by_user(df_input):
     ''' shorthand helper func'''
     return group_dataframe_by_columns(df_input, ['user_id'])
 
+
+def group_dataframe_by_pixel(df_input):
+    '''shorthand helper func'''
+    return group_dataframe_by_columns(df_input, ['x','y'])
+
 def group_dataframe_by_color(df_input):
     '''shorthand helper func'''
     return group_dataframe_by_columns(df_input, ['pixel_color'])
 
-def group_dataframe_by_pixel(df_input):
-    return group_dataframe_by_columns(df_input,['x','y'])
+def group_dataframe_by_time(df_input):
+    '''shorthand helper func'''
+    return group_dataframe_by_columns(df_input, ['t'])
+
+def group_dataframe_by_time_and_user(df_input):
+    '''shorthand helper func'''
+    return group_dataframe_by_columns(df_input, ['user_id', 't'])

@@ -133,3 +133,4 @@ dmypy.json
 
 # dont ignore gitkeep
 !/**/.gitkeep
+.DS_Store
