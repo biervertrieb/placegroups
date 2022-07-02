@@ -103,3 +103,9 @@ def plot_pixel_boundingbox(x_coord, y_coord, t_coord, color='blue', subplot=None
     if finish:
         show_and_save(subplot)
     return subplot
+
+def hex_to_rgb(hexcolor):
+    '''converts hex color value to RGB'''
+    hexcolor = hexcolor.lstrip('#')
+    lv = len(hexcolor)
+    return tuple(int(hexcolor[i:i+lv//3], 16) for i in range(0, lv, lv//3))
