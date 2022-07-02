@@ -140,7 +140,7 @@ def transform_dataframe_normalize_seconds(df_input: DataFrame) -> DataFrame:
     ''' normalizes the timestamp column so it starts with 0 seconds
     ONLY USE THIS AFTER TIMESTAMP FORMAT WAS TRANSFORMED '''
     mints = 0
-    if(df_input.select('timestamp').rdd.isEmpty is False):
+    if(df_input.select('timestamp').rdd.isEmpty() is False):
         mints = df_input.select('timestamp').rdd.min()[0]
     df_output = df_input.withColumn(
         'timestamp', (df_input['timestamp'] - mints))
