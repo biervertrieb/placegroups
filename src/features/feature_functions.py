@@ -47,17 +47,18 @@ def get_latestpixels_from_box(dataFrame,x1,y1,x2,y2,t):
 
     spark = SparkSession.builder.appName('placegroups').getOrCreate()
 
-    box_schema = ["x","y"]
+    box_schema = ["x_coord","y_coord"]
     generated_frame = spark.createDataFrame(data = generated_data, schema = box_schema)
 
     # join mit dem Hauptdatensatz -> Frame mit Datensatz für die Pixel in der Box
-    relevant_data = generated_frame.alias("gf").join(dataFrame.alias("df"), F.col("gf.x") == F.col("df.x"))
-    relevant_data = relevant_data.where(F.col("gf.y") == F.col("df.y"))
+    relevant_data = generated_frame.alias("gf").join(dataFrame.alias("df"), F.col("gf.x_coord") == F.col("df.x"))
+    relevant_data = relevant_data.where(F.col("gf.y_coord") == F.col("df.y"))
     relevant_data = relevant_data.where(F.col("df.t") < t)
 
     # finde den neuesten Wert pro Pixel und lösche alle anderen x,y Duplikate
-    window = Window.partitionBy("gf.x","gf.y").orderBy(F.col("t").desc())
+    window = Window.partitionBy("gf.x_coord","gf.y_coord").orderBy(F.col("t").desc())
     sorted_data = relevant_data.withColumn('steps',F.row_number().over(window))
-    dropped_data = sorted_data.where(F.col('steps') == 1).orderBy('gf.x','gf.y')
+    dropped_data = sorted_data.where(F.col('steps') == 1).orderBy('gf.x_coord','gf.y_coord').drop('x','y','steps')
+    dropped_data = dropped_data.withColumnRenamed('x_coord', 'x').withColumnRenamed('y_coord', 'y')
 
     return dropped_data
