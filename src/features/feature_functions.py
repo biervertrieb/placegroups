@@ -53,7 +53,7 @@ def get_latestpixels_from_box(dataFrame,x1,y1,x2,y2,t):
     # join mit dem Hauptdatensatz -> Frame mit Datensatz für die Pixel in der Box
     relevant_data = generated_frame.alias("gf").join(dataFrame.alias("df"), F.col("gf.x") == F.col("df.x"))
     relevant_data = relevant_data.where(F.col("gf.y") == F.col("df.y"))
-    relevant_data = relevant_data.where(F.col("df.t") < tz)
+    relevant_data = relevant_data.where(F.col("df.t") < t)
 
     # finde den neuesten Wert pro Pixel und lösche alle anderen x,y Duplikate
     window = Window.partitionBy("gf.x","gf.y").orderBy(F.col("t").desc())
