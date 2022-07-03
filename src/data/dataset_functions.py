@@ -139,9 +139,7 @@ def transform_dataframe_timestamp(df_input: DataFrame) -> DataFrame:
 def transform_dataframe_normalize_seconds(df_input: DataFrame) -> DataFrame:
     ''' normalizes the timestamp column so it starts with 0 seconds
     ONLY USE THIS AFTER TIMESTAMP FORMAT WAS TRANSFORMED '''
-    mints = 0
-    if(df_input.select('timestamp').rdd.isEmpty() is False):
-        mints = df_input.select('timestamp').rdd.min()[0]
+    mints = 1648810200 #12:50 UTC sollte zum normalisieren reichen, start war 13:00 UTC
     df_output = df_input.withColumn(
         'timestamp', (df_input['timestamp'] - mints))
     return df_output
