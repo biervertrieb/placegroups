@@ -22,8 +22,21 @@ def get_dataframe(sample=False) -> DataFrame:
     get_dataframe.cachedFrame = transformed_dataframe
     return transformed_dataframe
 
+def get_dataframe_onlymods_full(sample=False) -> DataFrame:
+    ''' Provides the Pyspark Dataframe data structure ready to use for mods'''
+    if get_dataframe_onlymods_full.cachedFrame is not None:
+        return get_dataframe_onlymods_full.cachedFrame
+    if 'TEST_ENVIRONMENT' in os.environ:
+        sample = True
+    provide_rawcsv(sample)
+    new_dataframe = make_dataframe_from_rawcsv()
+    transformed_dataframe = transform_dataframe(new_dataframe)
+    transformed_dataframe = transform_dataframe_onlymods(new_dataframe)
+    return transformed_dataframe
 
 get_dataframe.cachedFrame = None
+
+get_dataframe_onlymods_full.cachedFrame = None
 
 def get_dataframei(i: int) -> DataFrame:
     ''' Provides the Pyspark Dataframe data structure ready to use from specific dataset nr '''
@@ -45,8 +58,8 @@ def provide_rawcsv(sample=False):
     start = 0
     finish = 78
     if sample:
-        start = 1
-        finish = 2
+        start = 17
+        finish = 18
     for i in np.arange(start, finish):
         provide_rawcsvi(i)
         
