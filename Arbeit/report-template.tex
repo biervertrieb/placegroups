@@ -1,0 +1,40 @@
+\documentclass[sigconf]{acmart}
+
+% A4 instead of letter paper
+\geometry{a4paper}
+
+\usepackage[german,american]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc} % For umlauts (OT1) and the ß (OT1, T1).
+
+\usepackage{booktabs} % More formal table style.
+
+% ACM style ``tweaking''
+\settopmatter{printacmref=false}                   % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % Removes footnote with conference information in first columnd
+\pagestyle{plain}                                  % Removes running headers
+
+% Figures
+\DeclareGraphicsRule{.ai}{pdf}{*}{}% Handle .ai files as .pdf files.
+\DeclareGraphicsExtensions{.pdf,.ai,.jpg,.png}
+\pdfpagebox 5% Use ArtBox instead MediaBox. 1=MediaBox, 2=CropBox, 3=BleedBox, 4=TrimBox, 5=ArtBox. (shell: pdfinfo -box <pdf-file>)
+\setkeys{Gin}{pagebox=artbox}% Alternative (necessary for newer tex versions) for \pdfpagebox 5 in preceding line.
+\graphicspath{{../report-template-figures/}}
+
+
+\usepackage[math]{blindtext} % TODO Remove after adding own content.
+
+\begin{document}
+
+\input{report-template-pre}
+\input{report-template-part1}
+\input{report-template-part2}
+\input{report-template-part3}
+\input{report-template-part4}
+\input{report-template-part5}
+\input{report-template-sum}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{report-template.bib}
+
+\end{document}
