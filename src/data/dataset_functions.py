@@ -62,9 +62,9 @@ def provide_rawcsv(sample=False):
         finish = 2
     for i in np.arange(start, finish):
         provide_rawcsvi(i)
-        
 
 def provide_rawcsvi(i: int) -> DataFrame:
+    '''bla'''
     print('providing '+filename_csv(i)+' ...')
     if os.path.exists(filename_csv(i)) is False:
         print('not found. need to download '+filename_gzip(i)+' ...')
