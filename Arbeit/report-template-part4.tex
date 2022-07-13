@@ -26,6 +26,28 @@ Statistiken:\\
 - Grafik Mods\\
 - Fragen zur Rekonstruktion\\
 
+\subsection{Bots}
+(Stichpunkte zu meiner Arbeit mit den Bots)
+-erste Überlegung: Bots setzen genau alle 5 Minuten Pixel, um maximalen Nutzen zu erreichen \\
+-Frage: sind Bots nur für einen einzigen Pixel oder für ein ganzes Gebiet verantwortlich? \\
+-Recherche über die angewendeten Bot-Skripte ergibt tatsächlich: \\
+--Bots wurde ein Bild als Referenz + Koordinaten überreicht. Innerhalb dieses Bereiches haben sie in festgelegten, gleichmäßigen Abständen Pixel des referenzierten Bildes gesetzt. \\
+--Da sie stets in identischen Abständen Pixel setzten sind sie leicht zu erkennen (menschliche Nutzer könnten niemals mehrfach hintereinander auf die Sekunde genau sein) \\
+--i.d.R waren diese Abstände größer als bloß 5 Minuten, da sie sonst als Spam eingestuft und gebannt werden würden \\
+-Umsetzung: \\
+--zeitlicher Abstand zwischen zwei aufeinanderfolgenden Pixeln als Differenz berechnet & mit dem Abstand zu den nächsten/vorherigen Pixeln verglichen \\
+---Beispiel: \\
+---Nutzer hat Pixel 1, 2, 3 & 4 in der Reihenfolge hintereinander gesetzt \\
+---Wir bilden die zeitliche Differenz zwischen 1&2, 2&3, 3&4. Falls diese Differenzen identisch sind wird der Nutzer als Bot eingestuft. \\
+---dies muss auf einen Nutzer nur ein einziges Mal im Ablauf des Experiments zutreffen, da die Zeiten in den Skripten angepasst werden können, bzw. der (Bot-)Account auch zwischendurch von einem menschlichen Nutzer bedient werden kann \\
+-erfolgreich identifizierte Bots in 2022: ca. 17.500 (eventuell folgt präzisere Zahl), 110 Bots in 2017 \\
+-(hier Bot-Statistiken 2017 vs 2022 (Farben, meistumkämpfte Pixel)) \\
+-wie funktioniert das mit dem Nachzeichnen?: \\
+--Liste mit den User_ids der Bots wird mit dem normalen Datensatz gejoined, damit wir die Daten zu den Pixeln nutzen können \\
+--nacheinander wird jeder Pixel im Datensatz durchgegangen und auf einem Canvas gesetzt \\
+---einzige Schwierigkeit: Farben werden im Datensatz als Hex-Werte gegeben und müssen vor Platzieren des Pixels in die richtigen RGB-Werte umgewandelt werden \\
+-(Bot-Zeichnungen neben dem jeweils fertigen Place zeigen) \\
+
 \subsection{Moderatoren}
 Hier Input von Nicole!
 
