@@ -1,4 +1,4 @@
-\section{Bots und Mods} \label{question2} % Change title accordingly
+\section{Bots und Moderatoren} \label{question2} % Change title accordingly
 
 Statistische Auswertungen des Datensatzes:\\
 In diesem Abschnitt soll nun auf die Auswertung hinsichtlich der Bots und Moderatoren eingegangen werden. \\
@@ -50,19 +50,23 @@ Hier Input von Nicole!
 - Wie viele Pixel wurden von den Bots bzw. "normalen" Nutzern im Verhältnis zensiert? Lässt sich daraus ableiten, dass eher von Bots oder von Nutzern gesetzte Pixel zensiert werden mussten? \\
 - Um dies zu beantworten, musste zunächst eine Funktion geschrieben werden, welche rückwirkend die Pixel identifiziert, die mit dem jeweiligen Zensur-Quadrat eines Moderators zensiert wurden. \\
 - Beschreibung wie die Funktion vorgeht: \\
-... \\
+- Vor dem Funktionsaufruf werden zunächst alle Pixel bestimmt, die von den Zensuren der Moderatoren betroffen sind \\
+- Dies dient als einer der Inputs der Funktion \\
+- Den zweiten Input bietet ein DataFrame mit allen gesetzten Pixeln im Verlaufe des Experimentes \\
+- Dafür wird innerhalb der Funktion jeder Pixel schrittweise betrachtet, der von einer Zensur betroffen ist\\
+- Mittels einer For-Schleife wird dann von dem Zeitpunkt der Zensur aus runtergezählt, bis der Zeitpunkt 0 erreicht wurde oder der zensierte Pixel gefunden wurde \\
+- wurde ein zensierter Pixel identifiziert, wird dieser in ein neues DataFrame geschrieben, welches alle zensierten Pixel mit ihren Daten beinhaltet \\
+- Am Ende liefert die Funktion das entsprechende DataFrame mit allen zensierten Pixel und deren Daten, wie UserID, x- und y-Koordinate, etc.
 \\
 - Ein Zwischenergebnis dieser Funktion ist, dass die zensierten Pixel nachgezeichnet werden können. \\
 - Eine Erwartung was, dass die zensierten Artworks evtl "interessante" Themen darstellen, wie z.B. politisch Themen die unerwünscht waren \\
 - Jedoch wurde diese Erwartung nicht erfüllt, da es sich bei den zensierten Pixeln nur um unangemessene, kleinere zeichnungen handelte, die in diesem Rahmen auch nicht weiter betrachtet werden sollen. \\
 - Aufgrund von Problemen mit der Infrastruktur, war es nicht möglich den gesamten Datensatz aufeinmal auszuwerten, sodass die Frage "Wie viele Pixel wurden von den Bots bzw. "normalen" Nutzern im Verhältnis zensiert? Lässt sich daraus ableiten, dass eher von Bots oder von Nutzern gesetzte Pixel zensiert werden mussten?" entsprechend nicht beantwortete werden konnte \\
 - (Ein Problem ist, dass die Datensätze voneinander für diese Auswertung zu stark zusammenhängen, als das man diese hätte einzeln auswerten und zu einem Gesamtergebnis zusammentragen können) -> entsprechend im Fazit weiter drauf eingehen bzw. sagen dass es einen möglichen Ausblick bieten könnte! \\
-- damit bleibt diese Frage weiterhin offen \\
+- damit bleibt diese Frage weiterhin offen \\ %--> Ausblick
 
 
-
-
-\textbf{Abschluss}\\
+\textbf{Vergleiche}\\
 - Statistiken 2022 und 2017 im Vergleich - Grafiken\\
 - Vergleich Arbeit und Menge Bots\\
 - Vergleich der Zensur von Mods
