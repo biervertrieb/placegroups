@@ -1,8 +1,8 @@
-PWD /Users/nicolederr/Documents/GitHub/placegroups/Arbeit
+PWD /Users/nicolederr/Documents/GitHub/placegroups/reports/Arbeit Kopie
 INPUT /usr/local/texlive/2022/texmf.cnf
 INPUT /usr/local/texlive/2022/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/nicolederr/Documents/GitHub/placegroups/Arbeit/report-template.tex
+INPUT /Users/nicolederr/Documents/GitHub/placegroups/reports/Arbeit Kopie/report-template.tex
 OUTPUT report-template.log
 INPUT ./acmart.cls
 INPUT ./acmart.cls
@@ -1136,6 +1136,13 @@ INPUT report-template-part1.tex
 INPUT ./report-template-part1.tex
 INPUT ./report-template-part1.tex
 INPUT report-template-part1.tex
+INPUT ./report-template-part2.tex
+INPUT ./report-template-part2.tex
+INPUT ./report-template-part2.tex
+INPUT report-template-part2.tex
+INPUT ./report-template-part2.tex
+INPUT ./report-template-part2.tex
+INPUT report-template-part2.tex
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/nxlmi.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/ntxsy.tfm
@@ -1146,13 +1153,6 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/nxlmia.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/ntxsym.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/ntxsyc.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/ntxexa.tfm
-INPUT ./report-template-part2.tex
-INPUT ./report-template-part2.tex
-INPUT ./report-template-part2.tex
-INPUT report-template-part2.tex
-INPUT ./report-template-part2.tex
-INPUT ./report-template-part2.tex
-INPUT report-template-part2.tex
 INPUT ./report-template-part3.tex
 INPUT ./report-template-part3.tex
 INPUT ./report-template-part3.tex
@@ -1160,14 +1160,6 @@ INPUT report-template-part3.tex
 INPUT ./report-template-part3.tex
 INPUT ./report-template-part3.tex
 INPUT report-template-part3.tex
-INPUT ./report-template-part4.tex
-INPUT ./report-template-part4.tex
-INPUT ./report-template-part4.tex
-INPUT report-template-part4.tex
-INPUT ./report-template-part4.tex
-INPUT ./report-template-part4.tex
-INPUT report-template-part4.tex
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineTI-tlf-t1.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinBiolinumTB-tlf-t1.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinBiolinumTB-tlf-t1--base.tfm
 INPUT /usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map
@@ -1187,9 +1179,6 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinLibertineT
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1--base.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-ts1.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ts1--base.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/newtx/ntxsy.vf
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/txsys.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/txex-bar.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/newtx/nxlmi.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/LibertineMathMI.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/NewTXMI.tfm
@@ -1198,8 +1187,19 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/newtx/nxlmi7.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/LibertineMathMI7.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/NewTXMI7.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/newtx/stxscr.tfm
+INPUT ./report-template-part4.tex
+INPUT ./report-template-part4.tex
+INPUT ./report-template-part4.tex
+INPUT report-template-part4.tex
+INPUT ./report-template-part4.tex
+INPUT ./report-template-part4.tex
+INPUT report-template-part4.tex
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineTI-tlf-t1.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinLibertineTI-tlf-t1.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineTI-tlf-t1--base.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-t1.vf
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1--base.tfm
 INPUT ./report-template-part5.tex
 INPUT ./report-template-part5.tex
 INPUT ./report-template-part5.tex
@@ -1242,9 +1242,6 @@ INPUT report-template-sum.tex
 INPUT ./report-template-sum.tex
 INPUT ./report-template-sum.tex
 INPUT report-template-sum.tex
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-t1.vf
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1--base.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-t1.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1--base.tfm
 INPUT report-template.aux
@@ -1262,4 +1259,3 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/libertine/LinBiolinu
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/type1/public/newtx/txsys.pfb
